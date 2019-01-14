@@ -15,11 +15,6 @@ inputs:
       User for connecting to agent VMs
     default: centos
 
-  resource_count:
-    description: >
-      No of resources of this type
-    default: 1
-
 
 dsl_definitions:
   openstack_config: &openstack_config
@@ -34,6 +29,7 @@ dsl_definitions:
 
 
 node_templates:
+
   bootstrap:
     type: cloudify.nodes.Root
     interfaces:
@@ -61,11 +57,27 @@ node_templates:
       - type: cloudify.openstack.server_connected_to_port
         target: port
       - type: cloudify.openstack.server_connected_to_security_group
-        target: security_group
+        target: default_security_group
+      - type: cloudify.openstack.server_connected_to_security_group
+        target: minikube_security_group
       - type: cloudify.openstack.server_connected_to_floating_ip
         target: floating_ip
 
-  security_group:
+  minikube_security_group:
+    type: cloudify.openstack.nodes.SecurityGroup
+    properties:
+      openstack_config: *openstack_config
+      use_external_resource: true
+      create_if_missing: true
+      resource_id: minikube
+      disable_default_egress_rules: true
+      rules:
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 8123
+
+  default_security_group:
     type: cloudify.openstack.nodes.SecurityGroup
     properties:
       openstack_config: *openstack_config
