@@ -76,6 +76,10 @@ node_templates:
           direction: ingress
           protocol: tcp
           port: 8123
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 30000
 
   default_security_group:
     type: cloudify.openstack.nodes.SecurityGroup
