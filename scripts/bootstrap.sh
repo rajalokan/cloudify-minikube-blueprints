@@ -33,10 +33,10 @@ ctx logger info "Installing Minikube"
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
   && sudo install minikube-linux-amd64 /usr/bin/minikube
 
-# Start minikube
+# # Start minikube
 ctx logger info "Starting Minikube"
-export MINIKUBE_WANTUPDATENOTIFICATION=false
-export MINIKUBE_WANTREPORTERRORPROMPT=false
+# export MINIKUBE_WANTUPDATENOTIFICATION=false
+# export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$HOME/.minikube
 export CHANGE_MINIKUBE_NONE_USER=true
 mkdir $HOME/.kube || true
@@ -57,4 +57,4 @@ sudo -E minikube start --vm-driver=none
 #     && sudo chown -R $USER $HOME/.minikube \
 #     && sudo chgrp -R $USER $HOME/.minikube
 
-sudo chown -R $USER: $HOME/.minikube
+# sudo chown -R $USER: $HOME/.minikube
