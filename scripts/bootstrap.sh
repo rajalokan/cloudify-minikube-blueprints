@@ -30,8 +30,8 @@ sudo yum install -y kubectl
 
 # Install minikube
 ctx logger info "Installing Minikube"
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
-  && sudo install minikube-linux-amd64 /usr/bin/minikube
+curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o /tmp/minikube-linux-amd64
+sudo install /tmp/minikube-linux-amd64 /usr/bin/minikube
 
 # # Start minikube
 ctx logger info "Starting Minikube"
@@ -39,7 +39,7 @@ ctx logger info "Starting Minikube"
 # export MINIKUBE_WANTREPORTERRORPROMPT=false
 export MINIKUBE_HOME=$HOME/.minikube
 export CHANGE_MINIKUBE_NONE_USER=true
-mkdir $HOME/.kube || true
+mkdir -p $HOME/.kube || true
 touch $HOME/.kube/config
 export KUBECONFIG=$HOME/.kube/config
 
