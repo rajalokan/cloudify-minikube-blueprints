@@ -48,7 +48,7 @@ echo '1' | sudo tee /proc/sys/net/bridge/bridge-nf-call-iptables
 
 # Start minikube
 sudo -E minikube start --vm-driver=none
-# sudo -E minikube addons enable dashboard
+sudo -E minikube addons enable dashboard
 
 kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080
 kubectl expose deployment hello-minikube --type=NodePort
@@ -56,12 +56,15 @@ kubectl get pod
 minikube service hello-minikube --url
 curl $(minikube service hello-minikube --url)
 
+sudo chown -R $USER $HOME/.minikube
+
+ctx logger info "Bootstrap Successful"
+
 # sudo mv /root/.kube $HOME/.kube \
 #     && sudo chown -R $USER $HOME/.kube \
 #     && sudo chgrp -R $USER $HOME/.kube
 # sudo mv /root/.minikube $HOME/.minikube \
 #
-#     && sudo chown -R $USER $HOME/.minikube \
 #     && sudo chgrp -R $USER $HOME/.minikube
 
 # sudo chown -R $USER: $HOME/.minikube
