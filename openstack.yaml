@@ -30,15 +30,15 @@ dsl_definitions:
 
 node_templates:
 
-  bootstrap:
-    type: cloudify.nodes.Root
-    interfaces:
-      cloudify.interfaces.lifecycle:
-        configure:
-          implementation: scripts/bootstrap.sh
-    relationships:
-      - type: cloudify.relationships.contained_in
-        target: host
+  # bootstrap:
+  #   type: cloudify.nodes.Root
+  #   interfaces:
+  #     cloudify.interfaces.lifecycle:
+  #       configure:
+  #         implementation: scripts/bootstrap.sh
+  #   relationships:
+  #     - type: cloudify.relationships.contained_in
+  #       target: host
 
   host:
     type:  cloudify.openstack.nodes.Server
@@ -48,9 +48,10 @@ node_templates:
       image: { get_secret: centos_core_image }
       flavor: { get_secret: medium_image_flavor  }
       agent_config:
-        user: { get_input: agent_user }
-        network: external
-        install_method: init_script
+        install_method: none 
+        # user: { get_input: agent_user }
+        # network: external
+        # install_method: init_script
       server:
         key_name: { get_secret: cloud_key }
     relationships:
@@ -76,6 +77,14 @@ node_templates:
           direction: ingress
           protocol: tcp
           port: 8123
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 8080
+        - remote_ip_prefix: 0.0.0.0/0
+          direction: ingress
+          protocol: tcp
+          port: 8888
         - remote_ip_prefix: 0.0.0.0/0
           direction: ingress
           protocol: tcp
