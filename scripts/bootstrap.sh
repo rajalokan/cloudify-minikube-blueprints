@@ -9,7 +9,7 @@ fi
 source /tmp/sclib.sh
 
 # Preconfigure the instance
-_preconfigure_instance minikube
+#_preconfigure_instance minikube
 
 # Install docker runtime container
 ctx logger info "Installing docker"
